@@ -27,3 +27,13 @@ genfscon sysfs /devices/platform/soc/78b6000.i2c/i2c-2/2-005b/leds/vibrator     
 genfscon sysfs /kernel/aov                                                    		u:object_r:sysfs_adspd:s0
 genfscon sysfs /devices/platform/soc/7af7000.spi/spi_master/spi7/spi7.0/madera-extcon/input/input7/capabilities		u:object_r:sysfs_adspd:s0
 genfscon sysfs /devices/virtual/input/input0/capabilities		                     u:object_r:sysfs_adspd:s0
+
+#Pixel Power HAL
+
+genfscon debugfs /rpm_stats     u:object_r:debugfs_rpm:s0
+genfscon debugfs /system_stats  u:object_r:debugfs_rpm:s0
+
+genfscon sysfs /devices/virtual/graphics/fb0                                  u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/virtual/graphics/fb1                                  u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/virtual/graphics/fb2                                  u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/virtual/graphics/fb3  
