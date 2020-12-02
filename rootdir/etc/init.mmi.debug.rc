@@ -1,0 +1,30 @@
+on early-init
+    setrlimit 4 -1 -1
+    write /proc/sys/fs/suid_dumpable 1
+    write /proc/self/coredump_filter "0x7f"
+
+# Create app_dump after DE decryption done
+on post-fs-data
+    mkdir /data/app_dump 0750 root log
+    # Create power_supply_logger directory in case it wasn't
+    # already created
+    mkdir /data/vendor/power_supply_logger 0750 vendor_pwric log
+    copy /data/vendor_de/power_supply_logger/memtest.log /data/vendor/power_supply_logger/memtest.log
+
+on boot && property:ro.boot.adb_early=1
+    start vendor.mmi-usb-sh
+
+on moto-charger && property:ro.boot.adb_early=1
+    start vendor.mmi-usb-sh
+
+on boot && property:ro.boot.adb_wifi=1
+    setprop service.adb.tcp.port "5555"
+
+on property:persist.vendor.atvc.allow_all_core=0
+    setrlimit 4 0 0
+
+service vendor.memtest /vendor/bin/memtest_mode 6000
+    class late_start
+    user root
+    oneshot
+    disabled
