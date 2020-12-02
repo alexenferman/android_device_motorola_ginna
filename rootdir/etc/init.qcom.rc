@@ -51,6 +51,17 @@ on early-init
     exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules msm_11ad_proxy
 
 on init
+    
+    # Setup permission for Power HAL
+    chown system system /dev/stune/top-app/schedtune.boost
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/max_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/force_rail_on
+    chown system system /sys/class/kgsl/kgsl-3d0/force_clk_on
+    chown system system /sys/class/kgsl/kgsl-3d0/idle_timer
+    chown system system /sys/class/devfreq/soc:qcom,gpubw/min_freq
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/min_freq
+    
     # Create cgroup mount point for memory
     mkdir /sys/fs/cgroup/memory/bg 0750 root system
     write /sys/fs/cgroup/memory/bg/memory.swappiness 140
@@ -414,6 +425,16 @@ service qcomsysd /system/vendor/bin/qcom-system-daemon
     user root
     group root diag oem_2901
     disabled
+
+on property:vendor.post_boot.parsed=1
+    # Setup permission for Power HAL
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hyst_trigger_count
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hist_memory
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hyst_length
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/min_freq
+
+    # Enable PowerHAL hint processing
+    setprop vendor.powerhal.init 1
 
 on property:ro.vendor.hw.dualsim=true
    setprop persist.vendor.radio.multisim.config dsds
