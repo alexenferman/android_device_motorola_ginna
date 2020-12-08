@@ -495,7 +495,9 @@ PRODUCT_PACKAGES += \
     vndk_package
 
 PRODUCT_PACKAGES += \
+    libhwbinder \
     libhwbinder.vendor \
+    libhidltransport \
     libhidltransport.vendor
 
 PRODUCT_PACKAGES += \
