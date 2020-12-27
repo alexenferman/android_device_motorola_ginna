@@ -25,9 +25,9 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Inherit from ginna device
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
 
-# GApps
-$(call inherit-product, vendor/partner_gms/products/gms_go_2gb.mk)
-BUILD_GMS=yes
+# Do not include GApps by default
+#$(call inherit-product, vendor/partner_gms/products/gms_go_2gb.mk)
+#BUILD_GMS=yes
 
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_BUILD_SUPER_PARTITION := false
